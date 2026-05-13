@@ -4,22 +4,17 @@ Sistema web desenvolvido para gerenciamento de campeonatos interclasse do SENAI/
 
 O projeto permite cadastro de alunos, criação de times, autenticação de usuários e gerenciamento administrativo através de uma interface web moderna utilizando Spring Boot.
 
-════════════════════════════════════
+
 
 # Preview do Projeto
 
-> Adicione aqui prints do sistema:
+
 
 * Tela de Login
 * Dashboard
 * Cadastro de Times
 * Painel Administrativo
 
-Exemplo:
-
-```md
-![Login](./docs/login.png)
-```
 
 ════════════════════════════════════
 
@@ -117,58 +112,6 @@ Instale:
 
 ════════════════════════════════════
 
-## Clone o repositório
-
-```bash
-git clone https://github.com/SEU-USUARIO/interclasse.git
-```
-
-════════════════════════════════════
-
-## Entre na pasta do projeto
-
-```bash
-cd interclasse
-```
-
-════════════════════════════════════
-
-## Execute o projeto
-
-### Linux/Mac
-
-```bash
-./mvnw spring-boot:run
-```
-
-### Windows
-
-```bash
-mvnw.cmd spring-boot:run
-```
-
-════════════════════════════════════
-
-# Acesso
-
-Após iniciar:
-
-```bash
-http://localhost:8080
-```
-
-════════════════════════════════════
-
-# Banco de Dados H2
-
-Console H2:
-
-```bash
-http://localhost:8080/h2-console
-```
-
-════════════════════════════════════
-
 # Deploy
 
 O sistema foi preparado para deploy utilizando:
@@ -195,8 +138,8 @@ Este projeto foi desenvolvido para prática de:
 
 Desenvolvido por:
 
-Arthur Feliciano
-Pedro Marinho
-Winicius Cesar
+* Arthur Feliciano
+* Pedro Marinho
+* Winicius Cesar
 
 
