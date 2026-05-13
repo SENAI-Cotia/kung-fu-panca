@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Interclasse</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="login-page">
+
+<main class="login-shell">
+
+    <section class="brand-panel">
+        <div class="brand-content">
+            <div class="brand-lines">
+                SENAI<br>
+                <span>SESI</span>
+            </div>
+            <p>PELO FUTURO DO TRABALHO</p>
+        </div>
+
+        <div class="line-art"></div>
+    </section>
+
+    <section class="login-panel">
+
+        <div class="login-card animate-in">
+
+            <p class="eyebrow">Sistema de Interclasse</p>
+
+            <h1>Bem-vindo de volta</h1>
+
+            <p class="muted">
+                Faça login para acessar a plataforma.
+            </p>
+
+            <div th:if="${param.erro}" class="alert error">
+                Email ou senha inválidos.
+            </div>
+
+            <div th:if="${param.logout}" class="alert success">
+                Você saiu do sistema.
+            </div>
+
+            <form method="post" th:action="@{/login}" class="form-grid">
+
+                <label>
+                    E-mail
+                    <input
+                            type="email"
+                            name="username"
+                            placeholder="seu@email.com"
+                            required
+                            autofocus
+                    >
+                </label>
+
+                <label>
+                    Senha
+                    <input
+                            type="password"
+                            name="password"
+                            placeholder="Digite sua senha"
+                            required
+                    >
+                </label>
+
+                <button class="btn primary full" type="submit">
+                    Entrar
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

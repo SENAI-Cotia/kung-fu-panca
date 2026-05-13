@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Time | Interclasse</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            SENAI<br><span>SESI</span>
+        </div>
+
+        <nav>
+            <a href="dashboard.html">⌂ Dashboard</a>
+            <a class="active" href="criar-time.html">⚑ Criar time</a>
+            <a href="admin.html">◈ Admin</a>
+        </nav>
+
+        <button class="logout-link" onclick="logout()">↳ Sair</button>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+            <div>
+                <strong>Criar Novo Time</strong>
+                <span>Sistema Interclasse SENAI SESI</span>
+            </div>
+
+            <div class="avatar">A</div>
+        </header>
+
+        <section class="page-head">
+            <p class="eyebrow">Cadastro</p>
+            <h1>Novo Time</h1>
+            <p class="muted">
+                Cadastre um novo time no sistema interclasse.
+            </p>
+        </section>
+
+        <section class="panel animate-in">
+
+            <div class="panel-head">
+                <div>
+                    <h2>Informações do time</h2>
+                    <p>Preencha os dados corretamente.</p>
+                </div>
+            </div>
+
+            <div class="form-grid">
+
+                <label>
+                    Nome do time
+                    <input type="text" id="nomeTime" placeholder="Digite o nome">
+                </label>
+
+                <label>
+                    Turma
+                    <select id="turma">
+                        <option>1º Ano A</option>
+                        <option>1º Ano B</option>
+                        <option>1º Ano C</option>
+                        <option>2º Ano A</option>
+                        <option>2º Ano B</option>
+                        <option>2º Ano C</option>
+                        <option>3º Ano A</option>
+                        <option>3º Ano B</option>
+                        <option>3º Ano C</option>
+                    </select>
+                </label>
+
+                <label>
+                    Modalidade
+                    <select id="modalidade">
+                        <option>Futebol</option>
+                        <option>Vôlei</option>
+                        <option>Basquete</option>
+                    </select>
+                </label>
+
+                <label>
+                    Categoria
+                    <select id="categoria">
+                        <option>Masculino</option>
+                        <option>Feminino</option>
+                    </select>
+                </label>
+
+            </div>
+
+            <div class="players-box">
+
+                <div class="players-head">
+                    <h3>Integrantes</h3>
+
+                    <button class="btn primary" onclick="addAluno()">
+                        + Adicionar aluno
+                    </button>
+                </div>
+
+                <div id="alunos"></div>
+
+            </div>
+
+            <div class="actions">
+                <button class="btn ghost" onclick="window.location='dashboard.html'">
+                    Cancelar
+                </button>
+
+                <button class="btn primary" onclick="criarTime()">
+                    Salvar time
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="../static/js/script.js"></script>
+</body>
+</html>

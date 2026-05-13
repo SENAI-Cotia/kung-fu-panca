@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | Interclasse</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            SENAI<br>
+            <span>SESI</span>
+        </div>
+
+        <nav>
+            <a class="active" th:href="@{/admin}">
+                ◈ Admin
+            </a>
+        </nav>
+
+        <form method="post" th:action="@{/logout}">
+            <button class="logout-link" type="submit">
+                ↳ Sair
+            </button>
+        </form>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <strong>Administrador</strong>
+                <span sec:authentication="name">admin@email.com</span>
+            </div>
+
+            <div class="avatar">A</div>
+
+        </header>
+
+        <section class="page-head animate-in">
+
+            <p class="eyebrow">Painel Administrativo</p>
+
+            <h1>Administração do Interclasse</h1>
+
+            <p class="muted">
+                Crie usuários e gerencie o sistema.
+            </p>
+
+        </section>
+
+        <section class="panel animate-in">
+
+            <div class="panel-head">
+                <div>
+                    <h2>Criar usuário</h2>
+                    <p>Usuários criados aqui conseguem acessar o dashboard.</p>
+                </div>
+            </div>
+
+            <form method="post" th:action="@{/admin/usuarios}" class="form-grid single">
+
+                <label>
+                    Nome
+                    <input type="text" name="nome" placeholder="Nome do aluno" required>
+                </label>
+
+                <label>
+                    E-mail
+                    <input type="email" name="email" placeholder="aluno@email.com" required>
+                </label>
+
+                <label>
+                    Senha
+                    <input type="password" name="senha" placeholder="Senha" required>
+                </label>
+
+                <button class="btn primary full" type="submit">
+                    Criar usuário
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

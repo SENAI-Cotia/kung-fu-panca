@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Interclasse</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            SENAI<br>
+            <span>SESI</span>
+        </div>
+
+        <nav>
+            <a class="active" th:href="@{/dashboard}">
+                ⌂ Dashboard
+            </a>
+        </nav>
+
+        <form method="post" th:action="@{/logout}">
+            <button class="logout-link" type="submit">
+                ↳ Sair
+            </button>
+        </form>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <strong>Aluno</strong>
+                <span sec:authentication="name">usuario@email.com</span>
+            </div>
+
+            <div class="avatar">U</div>
+
+        </header>
+
+        <section class="page-head animate-in">
+
+            <p class="eyebrow">SENAI SESI</p>
+
+            <h1>Dashboard do Aluno</h1>
+
+            <p class="muted">
+                Área do aluno autenticado.
+            </p>
+
+        </section>
+
+        <section class="panel animate-in">
+
+            <div class="panel-head">
+                <div>
+                    <h2>Meu time</h2>
+                    <p>O aluno pode visualizar e criar seu time aqui.</p>
+                </div>
+            </div>
+
+            <p class="muted">
+                Login feito com Spring Security usando email.
+            </p>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

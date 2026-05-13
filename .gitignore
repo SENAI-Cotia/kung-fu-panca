@@ -1,0 +1,33 @@
+HELP.md
+
+target/
+!/.mvn/wrapper/maven-wrapper.jar
+
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IntelliJ ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### VS CODE ###
+.vscode/
+
+### H2 DATABASE ###
+data/
+*.mv.db
+*.trace.db
+
+### LOGS ###
+*.log
+
+### MAVEN ###
+.mvn/timing.properties
+
+### MAC ###
+.DS_Store
+
+### WINDOWS ###
+Thumbs.db
