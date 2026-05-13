@@ -1,7 +1,9 @@
 package com.interclasse.controller;
 
+import com.interclasse.repository.UsuarioRepository;
 import com.interclasse.service.UsuarioService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -9,9 +11,20 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UsuarioService usuarioService;
+    private final UsuarioRepository usuarioRepository;
 
-    public AuthController(UsuarioService usuarioService) {
+    public AuthController(
+            UsuarioService usuarioService,
+            UsuarioRepository usuarioRepository
+    ) {
         this.usuarioService = usuarioService;
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    @GetMapping
+    public String admin(Model model) {
+        model.addAttribute("usuarios", usuarioRepository.findAll());
+        return "admin";
     }
 
     @PostMapping("/usuarios")

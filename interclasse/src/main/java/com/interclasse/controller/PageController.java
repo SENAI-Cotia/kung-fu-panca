@@ -11,6 +11,11 @@ public class PageController {
         return "redirect:/login";
     }
 
+    @GetMapping("/index.html")
+    public String indexHtml() {
+        return "redirect:/login";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "index";
@@ -21,8 +26,18 @@ public class PageController {
         return "dashboard";
     }
 
-    @GetMapping("/admin")
-    public String admin() {
-        return "admin";
+    @GetMapping("/dashboard.html")
+    public String dashboardHtml() {
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/criarTime")
+    public String criarTime() {
+        return "criarTime";
+    }
+
+    @GetMapping("/criarTime.html")
+    public String criarTimeHtml() {
+        return "redirect:/criarTime";
     }
 }

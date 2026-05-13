@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
-    long countByTimeId(Long timeId);
-
     List<Aluno> findByTimeId(Long timeId);
+
+    void deleteByTimeId(Long timeId);
+
+    long countByTimeId(Long timeId);
 }

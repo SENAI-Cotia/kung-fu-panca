@@ -1,55 +1,84 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Time | Interclasse</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+
+    <title>Criar Time | Interclasse SENAI SESI</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
+
+<input type="hidden" id="usuarioLogado" th:value="${#authentication.name}">
+
 <div class="app-layout">
 
     <aside class="sidebar">
+
         <div class="sidebar-logo">
-            SENAI<br><span>SESI</span>
+            SENAI<br>
+            <span>SESI</span>
         </div>
 
         <nav>
-            <a href="dashboard.html">⌂ Dashboard</a>
-            <a class="active" href="criar-time.html">⚑ Criar time</a>
-            <a href="admin.html">◈ Admin</a>
+            <a th:href="@{/dashboard}">
+                ⌂ Dashboard
+            </a>
+
+            <a class="active" th:href="@{/criarTime}">
+                ⚑ Criar Time
+            </a>
         </nav>
 
-        <button class="logout-link" onclick="logout()">↳ Sair</button>
+        <form method="post" th:action="@{/logout}">
+            <button class="logout-link" type="submit">
+                ↳ Sair
+            </button>
+        </form>
+
     </aside>
 
     <main class="main-content">
 
         <header class="topbar">
-            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
 
             <div>
-                <strong>Criar Novo Time</strong>
-                <span>Sistema Interclasse SENAI SESI</span>
+                <strong>Criar Time</strong>
+                <span sec:authentication="name">usuario@email.com</span>
             </div>
 
-            <div class="avatar">A</div>
+            <div class="avatar">U</div>
+
         </header>
 
-        <section class="page-head">
+        <section class="page-head animate-in">
+
             <p class="eyebrow">Cadastro</p>
+
             <h1>Novo Time</h1>
+
             <p class="muted">
-                Cadastre um novo time no sistema interclasse.
+                Cadastre seu time no sistema interclasse.
             </p>
+
         </section>
 
-        <section class="panel animate-in">
+        <section class="panel animate-in delay-1">
 
             <div class="panel-head">
                 <div>
                     <h2>Informações do time</h2>
-                    <p>Preencha os dados corretamente.</p>
+                    <p>
+                        Cada usuário pode criar apenas um time.
+                    </p>
                 </div>
             </div>
 
@@ -57,12 +86,17 @@
 
                 <label>
                     Nome do time
-                    <input type="text" id="nomeTime" placeholder="Digite o nome">
+                    <input
+                            id="nomeTime"
+                            type="text"
+                            placeholder="Digite o nome do time"
+                    >
                 </label>
 
                 <label>
                     Turma
                     <select id="turma">
+                        <option value="">Selecione</option>
                         <option>1º Ano A</option>
                         <option>1º Ano B</option>
                         <option>1º Ano C</option>
@@ -78,6 +112,7 @@
                 <label>
                     Modalidade
                     <select id="modalidade">
+                        <option value="">Selecione</option>
                         <option>Futebol</option>
                         <option>Vôlei</option>
                         <option>Basquete</option>
@@ -87,6 +122,7 @@
                 <label>
                     Categoria
                     <select id="categoria">
+                        <option value="">Selecione</option>
                         <option>Masculino</option>
                         <option>Feminino</option>
                     </select>
@@ -109,13 +145,15 @@
             </div>
 
             <div class="actions">
-                <button class="btn ghost" onclick="window.location='dashboard.html'">
+
+                <a class="btn ghost" th:href="@{/dashboard}">
                     Cancelar
-                </button>
+                </a>
 
                 <button class="btn primary" onclick="criarTime()">
                     Salvar time
                 </button>
+
             </div>
 
         </section>
@@ -126,6 +164,7 @@
 
 <div id="toast" class="toast"></div>
 
-<script src="../static/js/script.js"></script>
+<script th:src="@{/js/script.js}"></script>
+
 </body>
 </html>

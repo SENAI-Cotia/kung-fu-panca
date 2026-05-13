@@ -1,10 +1,11 @@
 package com.interclasse.controller;
 
 import com.interclasse.model.Time;
+import com.interclasse.repository.AlunoRepository;
 import com.interclasse.repository.TimeRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,70 +15,79 @@ import java.util.Map;
 @CrossOrigin
 public class TimeController {
 
-    @Autowired
-    private TimeRepository repo;
+    private final TimeRepository timeRepository;
+    private final AlunoRepository alunoRepository;
+
+    public TimeController(
+            TimeRepository timeRepository,
+            AlunoRepository alunoRepository
+    ) {
+        this.timeRepository = timeRepository;
+        this.alunoRepository = alunoRepository;
+    }
 
     @PostMapping("/times")
-    public ResponseEntity<?> criar(@RequestBody Time t){
+    public ResponseEntity<?> criar(@RequestBody Time time) {
 
-        if(t.getUsuario() == null || t.getUsuario().isBlank()){
-            return ResponseEntity.badRequest().body(Map.of("erro","Usuário obrigatório"));
+        if (time.getUsuario() == null || time.getUsuario().isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("erro", "Usuário obrigatório"));
         }
 
-        if(repo.existsByUsuario(t.getUsuario())){
-            return ResponseEntity.badRequest().body(Map.of("erro","Você já criou um time"));
+        if (timeRepository.existsByUsuario(time.getUsuario())) {
+            return ResponseEntity.badRequest().body(Map.of("erro", "Você já criou um time"));
         }
 
-        if(repo.existsByNome(t.getNome())){
-            return ResponseEntity.badRequest().body(Map.of("erro","Nome do time já existe"));
+        if (timeRepository.existsByNome(time.getNome())) {
+            return ResponseEntity.badRequest().body(Map.of("erro", "Nome do time já existe"));
         }
 
-        repo.save(t);
-        return ResponseEntity.ok(Map.of("msg","ok"));
+        Time salvo = timeRepository.save(time);
+
+        return ResponseEntity.ok(salvo);
     }
 
     @GetMapping("/times")
-    public List<Time> listar(){
-        return repo.findAll();
+    public List<Time> listar() {
+        return timeRepository.findAll();
     }
 
-    // EDITAR (ADMIN)
     @PutMapping("/times/{id}")
-    public ResponseEntity<?> editar(@PathVariable Long id,
-                                    @RequestBody Map<String,String> data){
+    public ResponseEntity<?> editar(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> data
+    ) {
 
-        Time time = repo.findById(id).orElse(null);
+        Time time = timeRepository.findById(id).orElse(null);
 
-        if(time == null){
-            return ResponseEntity.badRequest().body(Map.of("erro","Time não encontrado"));
-        }
-
-        if(!"admin".equals(data.get("tipo"))){
-            return ResponseEntity.status(403).body(Map.of("erro","Apenas admin"));
+        if (time == null) {
+            return ResponseEntity.badRequest().body(Map.of("erro", "Time não encontrado"));
         }
 
         String nome = data.get("nome");
 
-        if(nome == null || nome.isBlank()){
-            return ResponseEntity.badRequest().body(Map.of("erro","Nome obrigatório"));
+        if (nome == null || nome.isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("erro", "Nome obrigatório"));
         }
 
         time.setNome(nome);
-        repo.save(time);
 
-        return ResponseEntity.ok(Map.of("msg","ok"));
+        timeRepository.save(time);
+
+        return ResponseEntity.ok(Map.of("msg", "Time atualizado"));
     }
 
-    // EXCLUIR (ADMIN)
     @DeleteMapping("/times/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id,
-                                     @RequestParam String tipo){
+    @Transactional
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
 
-        if(!"admin".equals(tipo)){
-            return ResponseEntity.status(403).body(Map.of("erro","Apenas admin"));
+        if (!timeRepository.existsById(id)) {
+            return ResponseEntity.badRequest().body(Map.of("erro", "Time não encontrado"));
         }
 
-        repo.deleteById(id);
-        return ResponseEntity.ok(Map.of("msg","ok"));
+        alunoRepository.deleteByTimeId(id);
+
+        timeRepository.deleteById(id);
+
+        return ResponseEntity.ok(Map.of("msg", "Time removido"));
     }
 }

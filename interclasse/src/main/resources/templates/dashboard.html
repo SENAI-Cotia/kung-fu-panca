@@ -4,7 +4,10 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard | Interclasse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Interclasse SENAI SESI</title>
+
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
@@ -23,6 +26,10 @@
             <a class="active" th:href="@{/dashboard}">
                 ⌂ Dashboard
             </a>
+
+            <a th:href="@{/criarTime}">
+                ⚑ Criar Time
+            </a>
         </nav>
 
         <form method="post" th:action="@{/logout}">
@@ -36,6 +43,10 @@
     <main class="main-content">
 
         <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
 
             <div>
                 <strong>Aluno</strong>
@@ -53,29 +64,61 @@
             <h1>Dashboard do Aluno</h1>
 
             <p class="muted">
-                Área do aluno autenticado.
+                Visualize o campeonato e acompanhe os times cadastrados.
             </p>
 
         </section>
 
-        <section class="panel animate-in">
+        <section class="stats-grid animate-in delay-1">
+
+            <article class="stat-card">
+                <span>Times cadastrados</span>
+                <strong id="statTimes">0</strong>
+                <i>⚑</i>
+            </article>
+
+            <article class="stat-card">
+                <span>Alunos cadastrados</span>
+                <strong id="statAlunos">0</strong>
+                <i>☷</i>
+            </article>
+
+            <article class="stat-card">
+                <span>Modalidades</span>
+                <strong>3</strong>
+                <i>🏆</i>
+            </article>
+
+            <article class="stat-card">
+                <span>Meu time</span>
+                <strong id="statMeuTime">0</strong>
+                <i>★</i>
+            </article>
+
+        </section>
+
+        <section class="panel animate-in delay-2">
 
             <div class="panel-head">
                 <div>
-                    <h2>Meu time</h2>
-                    <p>O aluno pode visualizar e criar seu time aqui.</p>
+                    <h2>Times cadastrados</h2>
+                    <p>
+                        Lista geral dos times do interclasse.
+                    </p>
                 </div>
             </div>
 
-            <p class="muted">
-                Login feito com Spring Security usando email.
-            </p>
+            <div id="times" class="team-list"></div>
 
         </section>
 
     </main>
 
 </div>
+
+<div id="toast" class="toast"></div>
+
+<script th:src="@{/js/script.js}"></script>
 
 </body>
 </html>

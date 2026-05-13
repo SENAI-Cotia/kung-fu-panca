@@ -53,6 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/login",
+                                "/index.html",
                                 "/css/**",
                                 "/js/**",
                                 "/img/**",
@@ -61,7 +62,14 @@ public class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+
                         .requestMatchers("/dashboard/**").hasAnyRole("USER", "ADMIN")
+
+                        .requestMatchers("/criarTime/**").hasAnyRole("USER", "ADMIN")
+
+                        .requestMatchers("/times/**").authenticated()
+
+                        .requestMatchers("/alunos/**").authenticated()
 
                         .anyRequest().authenticated()
                 )
@@ -79,6 +87,8 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                         .permitAll()
                 );
 

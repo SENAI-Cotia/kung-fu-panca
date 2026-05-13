@@ -4,7 +4,10 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Admin | Interclasse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin | Interclasse SENAI SESI</title>
+
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
@@ -37,6 +40,10 @@
 
         <header class="topbar">
 
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
             <div>
                 <strong>Administrador</strong>
                 <span sec:authentication="name">admin@email.com</span>
@@ -53,48 +60,213 @@
             <h1>Administração do Interclasse</h1>
 
             <p class="muted">
-                Crie usuários e gerencie o sistema.
+                Crie usuários, gerencie times e controle o sistema.
             </p>
 
         </section>
 
-        <section class="panel animate-in">
+        <section class="stats-grid animate-in delay-1">
+
+            <article class="stat-card">
+                <span>Usuários</span>
+                <strong id="statUsuarios">0</strong>
+                <i>👤</i>
+            </article>
+
+            <article class="stat-card">
+                <span>Times</span>
+                <strong id="statTimesAdmin">0</strong>
+                <i>⚑</i>
+            </article>
+
+            <article class="stat-card">
+                <span>Jogadores</span>
+                <strong id="statJogadoresAdmin">0</strong>
+                <i>☷</i>
+            </article>
+
+            <article class="stat-card">
+                <span>Banidos</span>
+                <strong id="statBanidos">0</strong>
+                <i>🚫</i>
+            </article>
+
+        </section>
+
+        <section class="content-grid admin-grid">
+
+            <article class="panel animate-in delay-2">
+
+                <div class="panel-head">
+                    <div>
+                        <h2>Criar usuário</h2>
+                        <p>
+                            Usuários criados aqui conseguem acessar o dashboard.
+                        </p>
+                    </div>
+                </div>
+
+                <form method="post" th:action="@{/admin/usuarios}" class="form-grid single">
+
+                    <label>
+                        Nome
+                        <input
+                                type="text"
+                                name="nome"
+                                placeholder="Nome do aluno"
+                                required
+                        >
+                    </label>
+
+                    <label>
+                        E-mail
+                        <input
+                                type="email"
+                                name="email"
+                                placeholder="aluno@email.com"
+                                required
+                        >
+                    </label>
+
+                    <label>
+                        Senha
+                        <input
+                                type="password"
+                                name="senha"
+                                placeholder="Senha"
+                                required
+                        >
+                    </label>
+
+                    <button class="btn primary full" type="submit">
+                        Criar usuário
+                    </button>
+
+                </form>
+
+            </article>
+
+            <article class="panel animate-in delay-3">
+
+                <div class="panel-head">
+                    <div>
+                        <h2>Simular evento</h2>
+                        <p>
+                            Simule confrontos usando modalidade e categoria.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+
+                    <label>
+                        Modalidade
+                        <select id="simModalidade">
+                            <option value="">Selecione</option>
+                            <option>Futebol</option>
+                            <option>Vôlei</option>
+                            <option>Basquete</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        Categoria
+                        <select id="simCategoria">
+                            <option value="">Selecione</option>
+                            <option>Masculino</option>
+                            <option>Feminino</option>
+                        </select>
+                    </label>
+
+                </div>
+
+                <div class="actions">
+                    <button class="btn primary" onclick="simularEvento()">
+                        Simular evento
+                    </button>
+                </div>
+
+                <div id="resultadoSimulacao" class="simulation-box"></div>
+
+            </article>
+
+        </section>
+
+        <section class="panel animate-in delay-2">
 
             <div class="panel-head">
                 <div>
-                    <h2>Criar usuário</h2>
-                    <p>Usuários criados aqui conseguem acessar o dashboard.</p>
+                    <h2>Usuários cadastrados</h2>
+                    <p>
+                        Banir ou desbanir usuários.
+                    </p>
                 </div>
             </div>
 
-            <form method="post" th:action="@{/admin/usuarios}" class="form-grid single">
+            <div class="admin-list">
 
-                <label>
-                    Nome
-                    <input type="text" name="nome" placeholder="Nome do aluno" required>
-                </label>
+                <div class="user-card" th:each="usuario : ${usuarios}">
 
-                <label>
-                    E-mail
-                    <input type="email" name="email" placeholder="aluno@email.com" required>
-                </label>
+                    <div class="user-top">
 
-                <label>
-                    Senha
-                    <input type="password" name="senha" placeholder="Senha" required>
-                </label>
+                        <div>
+                            <h3 th:text="${usuario.nome}">Nome</h3>
+                            <p th:text="${usuario.email}">email@email.com</p>
+                        </div>
 
-                <button class="btn primary full" type="submit">
-                    Criar usuário
-                </button>
+                        <span
+                                class="badge"
+                                th:classappend="${usuario.banido} ? ' status-ban' : ' status-ok'"
+                                th:text="${usuario.banido} ? 'Banido' : 'Ativo'">
+              Ativo
+            </span>
 
-            </form>
+                    </div>
+
+                    <div class="admin-actions">
+
+                        <form
+                                method="post"
+                                th:action="@{/admin/usuarios/{id}/banir(id=${usuario.id})}"
+                        >
+                            <button
+                                    class="btn warning"
+                                    type="submit"
+                                    th:text="${usuario.banido} ? 'Desbanir' : 'Banir'">
+                                Banir
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="panel animate-in delay-3">
+
+            <div class="panel-head">
+                <div>
+                    <h2>Times cadastrados</h2>
+                    <p>
+                        Editar times, jogadores e excluir times.
+                    </p>
+                </div>
+            </div>
+
+            <div id="adminTimes" class="admin-list"></div>
 
         </section>
 
     </main>
 
 </div>
+
+<div id="toast" class="toast"></div>
+
+<script th:src="@{/js/script.js}"></script>
 
 </body>
 </html>
