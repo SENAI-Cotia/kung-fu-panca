@@ -31,6 +31,7 @@ O projeto permite cadastro de alunos, criação de times, autenticação de usu�
 * Spring Data JPA
 * Hibernate
 * Maven
+* Render
 
 ## Frontend
 
